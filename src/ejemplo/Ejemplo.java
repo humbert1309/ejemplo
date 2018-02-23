@@ -5,8 +5,10 @@
  */
 package ejemplo;
 
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,21 +20,26 @@ public class Ejemplo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        double arreglo[] = {1.20, 1.15};
+
         operaciones o = new operaciones();
-        Map<Integer,Double> map = o.obtieneAyB(arreglo);
-        double a = o.interpolacion(1.187, 1.20, 1.15, 0.96272, 0.98084);
-        double b = o.interpolacion(1.187, 1.20, 1.15, -0.25527, -0.22485);
-        System.out.println("**************************RESULTADO*************************************");
-        System.out.println("D/d = " + 1.187);
-        System.out.println("A = " + o.interpolacion(1.187, 1.20, 1.15, 0.96272, 0.98084));
-        System.out.println("B = " + o.interpolacion(1.187, 1.20, 1.15, -0.25527, -0.22485));
-        System.out.println("Kt = " + o.calculaKt(a, 3, 32, b));
-       
-        System.out.println("A = " + o.interpolacion(1.187, arreglo[0], arreglo[1], map.get(0), map.get(2)));
-        System.out.println("B = " + o.interpolacion(1.187, arreglo[0], arreglo[1], map.get(1), map.get(3)));
-            
-        
+        double D, d, r;
+
+        D = Double.parseDouble(JOptionPane.showInputDialog("Deme el valor de D"));
+        d = Double.parseDouble(JOptionPane.showInputDialog("Deme el valor de d"));
+        r = Double.parseDouble(JOptionPane.showInputDialog("Deme el valor de r"));
+
+        double div = D / d;
+
+        if (o.buscaDd(div)) {
+            double arreglo[] = o.flujoNormal(div);
+        } else {
+            double arreglo[] = o.obtieneMayorMenor(div);
+            Map<Integer, Double> map = o.obtieneAyB(arreglo);
+            double a = o.interpolacion(div, arreglo[1], arreglo[0], map.get(2), map.get(0));
+            double b = o.interpolacion(div, arreglo[1], arreglo[0], map.get(3), map.get(1));
+            System.out.println(a + "\n" + b+ "\n" + div);
+        }
+
     }
 
 }
