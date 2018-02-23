@@ -29,15 +29,17 @@ public class Ejemplo {
         r = Double.parseDouble(JOptionPane.showInputDialog("Deme el valor de r"));
 
         double div = D / d;
-
+        
         if (o.buscaDd(div)) {
             double arreglo[] = o.flujoNormal(div);
+            System.out.println(o.calculaKt(arreglo[0], r, d, arreglo[1]));
         } else {
             double arreglo[] = o.obtieneMayorMenor(div);
             Map<Integer, Double> map = o.obtieneAyB(arreglo);
             double a = o.interpolacion(div, arreglo[1], arreglo[0], map.get(2), map.get(0));
             double b = o.interpolacion(div, arreglo[1], arreglo[0], map.get(3), map.get(1));
             System.out.println(a + "\n" + b+ "\n" + div);
+            System.out.println("Kt = "+ o.calculaKt(a, r, d, b));
         }
 
     }
